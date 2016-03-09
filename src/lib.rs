@@ -166,7 +166,7 @@ mod tests {
     }
 
     #[test]
-    fn unwrap_result_some() {
+    fn unwrap_option_some() {
         let option: Option<u32> = Some(32);
         let x = unwrap!(option);
         let y = unwrap!(option, "Here's a message");
@@ -176,14 +176,14 @@ mod tests {
 
     #[test]
     #[should_panic]
-    fn unwrap_result_none_message() {
+    fn unwrap_option_none_message() {
         let option: Option<u32> = None;
         let _ = unwrap!(option, "Here's a message");
     }
 
     #[test]
     #[should_panic]
-    fn unwrap_result_none_no_message() {
+    fn unwrap_option_none_no_message() {
         let option: Option<u32> = None;
         let _ = unwrap!(option);
     }
