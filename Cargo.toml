@@ -1,12 +1,12 @@
 [package]
 name = "unwrap"
-version = "0.1.0"
-authors = ["MaidSafe Developers <dev@maidsafe.net>"]
+version = "0.2.0"
+authors = ["Andrew Cann <shum@canndrew.org>"]
 description = "An unwrap! macro"
-documentation = "http://maidsafe.net/unwrap/latest"
-homepage = "http://maidsafe.net"
+documentation = "https://github.com/canndrew/unwrap"
+homepage = "https://github.com/canndrew/unwrap"
 license = "GPL-3.0"
 readme = "README.md"
-repository = "https://github.com/maidsafe/unwrap"
+repository = "https://github.com/canndrew/unwrap"
 
 [dependencies]

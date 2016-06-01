@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::fmt::{format, Debug, Arguments};
 
 /// Types which can be unwrapped and which may want to print a verbose error message when they are
 /// unwrapped incorrectly. This trait is implemented for `Result` and `Option` as a replacement for
@@ -25,13 +25,13 @@ pub trait VerboseUnwrap {
     ///  * `file`: The filename where this method is being called from.
     ///  * `line_number`: The line number where this method is being called from.
     ///  * `column`: The column number where this method is being called from
-    fn verbose_unwrap(self, message: Option<&str>, module_path: &str, file: &str, line_number: u32, column: u32) -> Self::Wrapped;
+    fn verbose_unwrap(self, message: Option<Arguments>, module_path: &str, file: &str, line_number: u32, column: u32) -> Self::Wrapped;
 }
 
 impl<T, E: Debug> VerboseUnwrap for Result<T, E> {
     type Wrapped = T;
 
-    fn verbose_unwrap(self, message: Option<&str>, module_path: &str, file: &str, line_number: u32, column: u32) -> T {
+    fn verbose_unwrap(self, message: Option<Arguments>, module_path: &str, file: &str, line_number: u32, column: u32) -> T {
         match self {
             Ok(t) => t,
             Err(e) => {
@@ -50,7 +50,8 @@ impl<T, E: Debug> VerboseUnwrap for Result<T, E> {
                 */
                
                 match message {
-                    Some(m) => {
+                    Some(args) => {
+                        let msg = format(args);
                         panic!("\n\
 \n\
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
@@ -60,7 +61,7 @@ impl<T, E: Debug> VerboseUnwrap for Result<T, E> {
 {}\n\
 \n\
 {:#?}\n\
-\n", file, line_number, column, module_path, m, Err::<(), E>(e));
+\n", file, line_number, column, module_path, msg, Err::<(), E>(e));
                     },
                     None => {
                         panic!("\n\
@@ -82,12 +83,13 @@ impl<T, E: Debug> VerboseUnwrap for Result<T, E> {
 impl<T> VerboseUnwrap for Option<T> {
     type Wrapped = T;
 
-    fn verbose_unwrap(self, message: Option<&str>, module_path: &str, file: &str, line_number: u32, column: u32) -> T {
+    fn verbose_unwrap(self, message: Option<Arguments>, module_path: &str, file: &str, line_number: u32, column: u32) -> T {
         match self {
             Some(t) => t,
             None => {
                 match message {
-                    Some(m) => {
+                    Some(args) => {
+                        let msg = format(args);
                         panic!("\n\
 \n\
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
@@ -95,7 +97,7 @@ impl<T> VerboseUnwrap for Option<T> {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\
 {}:{},{} in {}\n\
 {}\n\
-\n", file, line_number, column, module_path, m);
+\n", file, line_number, column, module_path, msg);
                     },
                     None => {
                         panic!("\n\
@@ -135,8 +137,8 @@ macro_rules! unwrap(
     ($e:expr) => (
         $crate::VerboseUnwrap::verbose_unwrap($e, None, module_path!(), file!(), line!(), column!())
     );
-    ($e:expr, $message:expr) => (
-        $crate::VerboseUnwrap::verbose_unwrap($e, Some($message), module_path!(), file!(), line!(), column!())
+    ($e:expr, $($arg:tt)*) => (
+        $crate::VerboseUnwrap::verbose_unwrap($e, Some(format_args!($($arg)*)), module_path!(), file!(), line!(), column!())
     );
 );
 
@@ -149,6 +151,13 @@ mod tests {
         let y = unwrap!(result, "Here's a message");
         assert_eq!(x, 32);
         assert_eq!(y, 32);
+    }
+
+    #[test]
+    #[should_panic]
+    fn unwrap_result_err_message_args() {
+        let result: Result<u32, u32> = Err(32);
+        let _ = unwrap!(result, "Here's a message {}", 23);
     }
 
     #[test]
