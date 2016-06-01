@@ -79,3 +79,18 @@ macro_rules! unwrap(
 );
 ```
 
+## Usage
+
+Add this to your dependencies in `Cargo.toml`
+
+```
+unwrap = "~0.2.0"
+```
+
+Then import it using `#[macro_use]`
+
+```
+#[macro_use]
+extern crate unwrap;
+```
+
