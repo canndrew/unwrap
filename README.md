@@ -84,7 +84,7 @@ macro_rules! unwrap(
 Add this to your dependencies in `Cargo.toml`
 
 ```
-unwrap = "~0.2.0"
+unwrap = "~1.1.0"
 ```
 
 Then import it using `#[macro_use]`
