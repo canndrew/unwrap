@@ -1,6 +1,6 @@
 [package]
 name = "unwrap"
-version = "0.2.0"
+version = "1.1.0"
 authors = ["Andrew Cann <shum@canndrew.org>"]
 description = "An unwrap! macro"
 documentation = "https://github.com/canndrew/unwrap"
