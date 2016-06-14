@@ -6,6 +6,8 @@ advantage of using this macro over the `.unwrap()`/`.expect()` methods is that,
 on a panic, it will print the file name, line number, column number, and
 function name of where the macro was called from.
 
+[Documentation](http://canndrew.org/rust-doc/unwrap)
+
 ## Example
 
 This code:
