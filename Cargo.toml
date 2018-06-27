@@ -2,11 +2,10 @@
 name = "unwrap"
 version = "1.1.0"
 authors = ["Andrew Cann <shum@canndrew.org>"]
-description = "An unwrap! macro"
-documentation = "https://github.com/canndrew/unwrap"
+categories = ["development-tools::debugging", "development-tools::testing"]
+description = "An unwrap! and an unwrap_err! macro"
 homepage = "https://github.com/canndrew/unwrap"
+keywords = ["unwrap", "unwrap_err"]
 license = "GPL-3.0"
 readme = "README.md"
 repository = "https://github.com/canndrew/unwrap"
-
-[dependencies]
