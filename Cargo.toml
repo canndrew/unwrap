@@ -1,6 +1,6 @@
 [package]
 name = "unwrap"
-version = "1.1.0"
+version = "1.2.0"
 authors = ["Andrew Cann <shum@canndrew.org>"]
 categories = ["development-tools::debugging", "development-tools::testing"]
 description = "An unwrap! and an unwrap_err! macro"
