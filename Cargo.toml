@@ -1,11 +1,11 @@
 [package]
 name = "unwrap"
-version = "1.2.0"
+version = "1.2.1"
 authors = ["Andrew Cann <shum@canndrew.org>"]
 categories = ["development-tools::debugging", "development-tools::testing"]
 description = "An unwrap! and an unwrap_err! macro"
 homepage = "https://github.com/canndrew/unwrap"
 keywords = ["unwrap", "unwrap_err"]
-license = "GPL-3.0"
+license = "MIT OR BSD-3-Clause"
 readme = "README.md"
 repository = "https://github.com/canndrew/unwrap"
